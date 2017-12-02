@@ -10,6 +10,8 @@ public class GuestManager : MonoBehaviour
 
     public GameObject guestPrefab;
     public Transform guestSpawnLocation;
+    public Transform playerHand;
+    public Transform playerHead;
 
     private void Awake()
     {
@@ -27,6 +29,8 @@ public class GuestManager : MonoBehaviour
 
     public void SpawnGuest()
     {
-        Instantiate(guestPrefab, guestSpawnLocation.position, guestSpawnLocation.rotation);
+        IKThingy i = Instantiate(guestPrefab, guestSpawnLocation.position, guestSpawnLocation.rotation).GetComponentInChildren<IKThingy>();
+        i.pressanKasi = playerHand;
+        i.pressanPaa = playerHead;
     }
 }

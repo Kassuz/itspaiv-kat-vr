@@ -3,18 +3,23 @@ using System.Collections;
 
 public class Player : MonoBehaviour
 {
+    public Transform rightHand;
+
     private Guest currentGuest;
+
+    private float handshakeTimer = 0.0f;
 
     private void Update()
     {
         if (currentGuest != null)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            Handshake();
+
+            if (handshakeTimer >= 1.5f)
             {
-                currentGuest.hasShookHand = true;
+                StartCoroutine(currentGuest.AfterHandshake());
                 currentGuest = null;
-                GuestManager.instance.SpawnGuest();
-                GuestManager.instance.CanMove = true;
+                handshakeTimer = 0.0f;
             }
         }
     }
@@ -25,6 +30,16 @@ public class Player : MonoBehaviour
         {
             Debug.Log("New guest has appeared!");
             currentGuest = other.GetComponent<Guest>();
+        }
+    }
+
+    private void Handshake()
+    {
+        if ((rightHand.position - currentGuest.handTransform.position).sqrMagnitude > 0.1f) return;
+
+        if (OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger) > 0.1f)
+        {
+            handshakeTimer += Time.deltaTime;
         }
     }
 }

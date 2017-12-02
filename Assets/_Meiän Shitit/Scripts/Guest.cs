@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class Guest : MonoBehaviour
 {
-    public bool hasShookHand;
+    public Transform handTransform;
+
+    [HideInInspector] public IKThingy ik;
 
     [SerializeField] private float speed;
 
     private Rigidbody rb;
 
+    private bool hasShookHand;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-
+        ik = GetComponentInChildren<IKThingy>();
     }
   
     private void FixedUpdate()
@@ -22,9 +26,38 @@ public class Guest : MonoBehaviour
             rb.MovePosition(rb.position + transform.forward * speed * Time.deltaTime);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private IEnumerator OnTriggerEnter(Collider other)
     {
         Debug.Log("Kättely!");
         GuestManager.instance.CanMove = false;
+        yield return Rotate(-90.0f);
+        ik.kattely = true;
+    }
+
+    public IEnumerator AfterHandshake()
+    {
+        ik.kattely = false;
+
+        yield return Rotate(90.0f);
+
+        hasShookHand = true;
+        GuestManager.instance.CanMove = true;
+        GuestManager.instance.SpawnGuest();
+    }
+
+    public IEnumerator Rotate(float degrees)
+    {
+        
+        Quaternion oldRot = rb.rotation;
+        Quaternion newRot = oldRot * Quaternion.AngleAxis(degrees, transform.up);
+
+        float t = 0;
+
+        while (t <= 1.0f)
+        {
+            rb.MoveRotation(Quaternion.Slerp(oldRot, newRot, t));
+            t += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
     }
 }
