@@ -9,6 +9,7 @@ public class IKThingy : MonoBehaviour {
     public Vector3 ikPosition;
     public Vector3 ikLookPosition;
     public Transform pressanKasi;
+    public Transform pressanPaa;
     public bool kattely;
     float kattelyWeight;
 
@@ -30,10 +31,17 @@ public class IKThingy : MonoBehaviour {
         if (kattely)
         {
             if (kattelyWeight < 1) kattelyWeight += Time.deltaTime / 2;
-            Debug.Log(kattelyWeight);
+            //Debug.Log(kattelyWeight);
             animator.SetIKPositionWeight(AvatarIKGoal.RightHand, kattelyWeight);
             animator.SetLookAtWeight(kattelyWeight);
-            animator.SetLookAtPosition(pressanKasi.position);
+            animator.SetLookAtPosition(pressanPaa.position);
+        }
+        else
+        {
+            if (kattelyWeight > 0) kattelyWeight -= Time.deltaTime * 2;
+            animator.SetIKPositionWeight(AvatarIKGoal.RightHand, kattelyWeight);
+            animator.SetLookAtWeight(kattelyWeight);
+            animator.SetLookAtPosition(pressanPaa.position);
         }
         
     }
