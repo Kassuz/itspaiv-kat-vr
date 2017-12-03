@@ -12,12 +12,15 @@ public class GuestProps : MonoBehaviour
     public Material[] hairColours;
     public GameObject[] hairList;
     public GameObject[] moustachekchekheList;
+    public GameObject[] props;
 
     public GameObject jacket;
     public GameObject shirt;
     public GameObject pants;
     public GameObject skin;
+    public GameObject bomb;
     GameObject hair;
+
 
     void OnEnable()
     {
@@ -25,10 +28,18 @@ public class GuestProps : MonoBehaviour
 
         if (i < hairList.Length)
         {
-            hair = hairList[i];
-            hair.SetActive(true);
-            i = (int)Random.Range(0, hairColours.Length);
-            hair.GetComponent<Renderer>().material = hairColours[i];
+            if (hairList[i].name == "tophat")
+            {
+                hairList[i].SetActive(true);
+            }
+            else
+            {
+                hair = hairList[i];
+                hair.SetActive(true);
+                i = (int)Random.Range(0, hairColours.Length);
+                hair.GetComponent<Renderer>().material = hairColours[i];
+            }
+
         }
 
         i = (int)Random.Range(0, moustachekchekheList.Length + 1);
@@ -71,6 +82,21 @@ public class GuestProps : MonoBehaviour
 
         i = (int)Random.Range(0, skinList.Length);
         skin.GetComponent<Renderer>().material = skinList[i];
+
+        i = (int)Random.Range(0, props.Length * 2);
+
+        if (i < props.Length)
+        {
+            props[i].SetActive(true);
+        }
+
+
+        i = (int)Random.Range(0, 8);
+
+        if (i < 3)
+        {
+            bomb.SetActive(true);
+        }
 
     }
 
