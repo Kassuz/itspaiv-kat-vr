@@ -34,7 +34,7 @@ public class GuestManager : MonoBehaviour
 
     private IEnumerator SpawnFirstGuests()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 12; i++)
         {
             SpawnGuest();
             yield return new WaitForSeconds(Random.Range(1.0f, 1.25f));
