@@ -35,9 +35,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Ambient: 0.431
+    - _Ambient: 0.377
     - _Tween: 0.07
-    - _WaveSpeed: 1
-    - _WaveStrength: 0.624
+    - _WaveSpeed: 0.4
+    - _WaveStrength: 0.393
     m_Colors:
     - _ColorTint: {r: 0, g: 0, b: 0, a: 1}
