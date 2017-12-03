@@ -27,6 +27,20 @@ public class GuestManager : MonoBehaviour
         CanMove = true;
     }
 
+    private void Start()
+    {
+        StartCoroutine(SpawnFirstGuests());
+    }
+
+    private IEnumerator SpawnFirstGuests()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            SpawnGuest();
+            yield return new WaitForSeconds(Random.Range(1.0f, 1.25f));
+        }
+    }
+
     public void SpawnGuest()
     {
         IKThingy i = Instantiate(guestPrefab, guestSpawnLocation.position, guestSpawnLocation.rotation).GetComponentInChildren<IKThingy>();

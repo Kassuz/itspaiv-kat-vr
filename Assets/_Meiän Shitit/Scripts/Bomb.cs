@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Bomb : MonoBehaviour
 {
+    public GameObject explosionPrefab;
+    public bool isDefused;
+
     private Rigidbody rb;
     private MeshRenderer mesh;
     
@@ -20,5 +23,11 @@ public class Bomb : MonoBehaviour
     private void OnJointBreak()
     {
         mesh.material.color = Color.red;
+        isDefused = true;
+    }
+
+    public void BlowUp()
+    {
+        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
     }
 }

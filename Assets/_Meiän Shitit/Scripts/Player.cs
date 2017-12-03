@@ -4,6 +4,7 @@ using System.Collections;
 public class Player : MonoBehaviour
 {
     public Transform rightHand;
+    public Transform handMeetingArea;
 
     private Guest currentGuest;
 
@@ -15,7 +16,7 @@ public class Player : MonoBehaviour
         {
             Handshake();
 
-            if (handshakeTimer >= 1.5f)
+            if (handshakeTimer >= 1.0f)
             {
                 StartCoroutine(currentGuest.AfterHandshake());
                 currentGuest = null;
@@ -35,11 +36,19 @@ public class Player : MonoBehaviour
 
     private void Handshake()
     {
-        if ((rightHand.position - currentGuest.handTransform.position).sqrMagnitude > 0.1f) return;
+        if ((rightHand.position - currentGuest.handTransform.position).sqrMagnitude > 0.01f) return;
+
 
         if (OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger) > 0.1f)
         {
+            currentGuest.ik.pressanKasi = rightHand;
+
             handshakeTimer += Time.deltaTime;
         }
+        else
+        {
+            currentGuest.ik.pressanKasi = handMeetingArea;
+        }
+
     }
 }

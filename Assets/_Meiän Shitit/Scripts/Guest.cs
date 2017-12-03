@@ -11,6 +11,7 @@ public class Guest : MonoBehaviour
     [SerializeField] private float speed;
 
     private Rigidbody rb;
+    private Bomb bomb;
 
     private bool hasShookHand;
 
@@ -18,6 +19,7 @@ public class Guest : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         ik = GetComponentInChildren<IKThingy>();
+        bomb = GetComponentInChildren<Bomb>();
     }
   
     private void FixedUpdate()
@@ -39,6 +41,12 @@ public class Guest : MonoBehaviour
         ik.kattely = false;
 
         yield return Rotate(90.0f);
+
+        if (bomb != null && !bomb.isDefused)
+        {
+            bomb.BlowUp();
+            Debug.Log("Boooooooooooooooooooooooooooooooooooooooooooooom!");
+        }
 
         hasShookHand = true;
         GuestManager.instance.CanMove = true;
