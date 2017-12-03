@@ -4,22 +4,41 @@ using UnityEngine;
 
 public class Guest : MonoBehaviour
 {
+    public AudioClip[] randomChatter;
+
+
     public Transform handTransform;
+    public bool HasGreeted { get; set; }
 
     [HideInInspector] public IKThingy ik;
+    [HideInInspector] public int greetLine;
+    [HideInInspector] public int hurryLine;
 
     [SerializeField] private float speed;
 
     private Rigidbody rb;
+    [HideInInspector] public AudioSource audio;
     private Bomb bomb;
 
     private bool hasShookHand;
 
     private void Start()
     {
+        audio = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
         ik = GetComponentInChildren<IKThingy>();
         bomb = GetComponentInChildren<Bomb>();
+    }
+
+    private void Update()
+    {
+        if (ik.kattely) return;
+
+
+        if (Random.value < 0.005f && !audio.isPlaying)
+        {
+            audio.PlayOneShot(randomChatter[Random.Range(0, randomChatter.Length)], 0.5f);
+        }
     }
   
     private void FixedUpdate()
@@ -31,6 +50,7 @@ public class Guest : MonoBehaviour
     private IEnumerator OnTriggerEnter(Collider other)
     {
         Debug.Log("Kättely!");
+
         GuestManager.instance.CanMove = false;
         yield return Rotate(-90.0f);
         ik.kattely = true;
