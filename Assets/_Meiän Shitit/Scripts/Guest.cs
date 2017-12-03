@@ -35,9 +35,9 @@ public class Guest : MonoBehaviour
         if (ik.kattely) return;
 
 
-        if (Random.value < 0.005f && !audio.isPlaying)
+        if (Random.value < 0.0005f && !audio.isPlaying)
         {
-            audio.PlayOneShot(randomChatter[Random.Range(0, randomChatter.Length)], 0.5f);
+            audio.PlayOneShot(randomChatter[Random.Range(0, randomChatter.Length)], 0.1f);
         }
     }
   

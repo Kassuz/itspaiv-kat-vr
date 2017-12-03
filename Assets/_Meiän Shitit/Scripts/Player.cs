@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log("New guest has appeared!");
             if (!generalAudio.isPlaying)
-                generalAudio.PlayOneShot(introduction[Random.Range(0, introduction.Length)], 0.5f);
+                generalAudio.PlayOneShot(introduction[Random.Range(0, introduction.Length)], 0.6f);
 
             irritationTimer = 0.0f;
             currentGuest = other.GetComponent<Guest>();
