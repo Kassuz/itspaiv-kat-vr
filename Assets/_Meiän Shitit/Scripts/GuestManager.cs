@@ -13,6 +13,9 @@ public class GuestManager : MonoBehaviour
     public Transform playerHand;
     public Transform playerHead;
 
+    public GameObject startPanel;
+    private bool gameStarted;
+
     private void Awake()
     {
         if (instance == null)
@@ -27,14 +30,19 @@ public class GuestManager : MonoBehaviour
         CanMove = true;
     }
 
-    private void Start()
+    private void Update()
     {
-        StartCoroutine(SpawnFirstGuests());
+        if (!gameStarted && OVRInput.Get(OVRInput.Button.One))
+        {
+            StartCoroutine(SpawnFirstGuests());
+            gameStarted = true;
+            startPanel.SetActive(false);
+        }
     }
 
     private IEnumerator SpawnFirstGuests()
     {
-        for (int i = 0; i < 12; i++)
+        for (int i = 0; i < 11; i++)
         {
             SpawnGuest();
             yield return new WaitForSeconds(Random.Range(1.0f, 1.25f));

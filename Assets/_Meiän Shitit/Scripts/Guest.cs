@@ -35,9 +35,9 @@ public class Guest : MonoBehaviour
         if (ik.kattely) return;
 
 
-        if (Random.value < 0.0005f && !audio.isPlaying)
+        if (Random.value < 0.0001f && !audio.isPlaying)
         {
-            audio.PlayOneShot(randomChatter[Random.Range(0, randomChatter.Length)], 0.1f);
+            audio.PlayOneShot(randomChatter[Random.Range(0, randomChatter.Length)], 0.35f);
         }
     }
   
@@ -49,7 +49,9 @@ public class Guest : MonoBehaviour
 
     private IEnumerator OnTriggerEnter(Collider other)
     {
-        Debug.Log("Kättely!");
+        if (other.tag != "GreetingArea") yield break;
+
+        Debug.Log("Kättely");
 
         GuestManager.instance.CanMove = false;
         yield return Rotate(-90.0f);

@@ -12,6 +12,8 @@ TagManager:
   - dontmove
   - listlast
   - Guest
+  - Fire
+  - GreetingArea
   layers:
   - Default
   - TransparentFX
